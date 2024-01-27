@@ -1,0 +1,48 @@
+/* StarWarsIntro.module.css */
+
+.star-wars-intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Pathway Gothic One', sans-serif;
+    background-color: black;
+    color: yellow;
+}
+
+.crawl {
+    position: relative;
+    top: 100vh;
+    opacity: 0; /* Start with the text fully transparent */
+    transform-origin: 50% 100%;
+    animation: crawl 60s linear forwards, fadeIn 5s ease-in forwards;
+}
+
+@keyframes crawl {
+    0% {
+        top: 100vh;
+        transform: scale(1.5) rotateX(20deg) translateZ(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1; /* Text becomes fully opaque halfway through */
+    }
+    100% {
+        top: -3000px;
+        transform: scale(1) rotateX(25deg) translateZ(-2500px);
+        opacity: 0; /* Fade out at the end */
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.content {
+    text-align: justify;
+    font-size: 2rem; /* Increased font size */
+    max-width: 60%; /* Restrict the width to center the text */
+    margin: 0 auto; /* Center the content horizontally */
+}
