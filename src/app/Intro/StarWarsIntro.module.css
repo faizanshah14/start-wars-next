@@ -46,3 +46,30 @@
     max-width: 60%; /* Restrict the width to center the text */
     margin: 0 auto; /* Center the content horizontally */
 }
+
+/* Add these styles to your StarWarsIntro.module.css file */
+
+.button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 3;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button.active {
+    background-color: #28a745;
+}
+
+.button.active:hover {
+    background-color: #1e7e34;
+}

@@ -1,26 +1,50 @@
 // StarWarsIntro.js
-// use client
+'use client'
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef , useState} from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './StarWarsIntro.module.css'; // Make sure the path matches the location of your CSS file
 
 export default function StarWarsIntro() {
     const audioRef = useRef(null);
-
+    const [isPlaying, setIsPlaying] = useState(false);
+    const crawlRef = useRef(null);
+    const router = useRouter();
     useEffect(() => {
         // Play the audio when the component mounts
         audioRef.current.play();
+        toggleMute();
+        
+        const handleAnimationEnd = () => {
+            console.log('Animation ended');
+            setTimeout(()=>{
+                audioRef.current.pause();
+                router.push('/dashboard');
+            },30000) // or any other action
 
+        };
+        const crawlElement = crawlRef.current;
+        crawlElement.addEventListener('animationend', handleAnimationEnd);
+        
         // Optional: Pause the audio when the component unmounts
         return () => {
-            audioRef.current.pause();
+            audioRef?.current?.pause();
+            crawlElement.removeEventListener('animationend', handleAnimationEnd);
         };
     }, []);
+    const toggleMute = () => {
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play();
+        }
+        setIsPlaying(!isPlaying);
+    };
 
     return (
         <div className={styles['star-wars-intro']}>
-            <audio ref={audioRef} src="/star-wars-theme.mp3" loop />
-            <div className={styles.crawl}>
+            <audio ref={audioRef} src="/star-wars-theme.mp3" loop  />
+            <div className={styles.crawl} ref={crawlRef} >
                 <div className={styles.content}>
                     A long time ago, in a galaxy far, far away....
                     <br /><br />
@@ -49,6 +73,11 @@ export default function StarWarsIntro() {
                     freedom to the galaxy....
                 </div>
             </div>
+            <button 
+            className={`${styles.button} ${isPlaying ? styles.active : ''}`} 
+            onClick={toggleMute}>
+                {isPlaying ? 'Mute' : 'unmute'}
+            </button>
         </div>
     );
 }
